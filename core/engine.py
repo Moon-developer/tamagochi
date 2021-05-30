@@ -3,9 +3,29 @@ This module holds the core class to run and manage the game at runtime
 """
 import shelve
 from os import mkdir
+from copy import deepcopy
 import pyxel
 from core import Draw, Animation, Collision
 from core import Assets
+
+
+class ResetManager:
+    """ Reset manager to store default state of class for resetting """
+
+    def store(self, cls):
+        """
+        :param cls: class self parameter to be saved
+        """
+        self.__dict__ = deepcopy(cls.__dict__)
+
+    def get_stored(self):
+        """
+        returns a copy of the stored defaults
+        """
+        return deepcopy(self.__dict__)
+
+
+RESET_MANAGER = ResetManager()
 
 
 class Tamagotchi:
@@ -27,6 +47,9 @@ class Tamagotchi:
         self.draw_manager = Draw(collision=self.collision)
         self.animation = Animation()
 
+        # set values to reset
+        RESET_MANAGER.store(self)
+
         # load save game and replace class instance with saved instance
         self._load_save()
         self.room['current'] = 3  # reset to start at menu
@@ -38,6 +61,15 @@ class Tamagotchi:
             save.close()
         except FileNotFoundError:
             mkdir('saves')
+
+    def _clear_save(self):
+        try:
+            save = shelve.open('saves/tamagotchi_save')
+            save.clear()
+            save.close()
+            self.__dict__ = RESET_MANAGER.get_stored()
+        except FileNotFoundError:
+            pass
 
     def _save_game(self):
         save = shelve.open('saves/tamagotchi_save')
@@ -68,19 +100,19 @@ class Tamagotchi:
         Character movement controller
         """
         self.player['direction'] = -1
-        if pyxel.btn(pyxel.KEY_LEFT):
+        if pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.KEY_A):
             if 0 <= self.player['x'] - 1 <= self.room['w'] and not self.check_colliders(move_x=-1):
                 self.player['x'] -= 1
                 self.player['direction'] = 0
-        if pyxel.btn(pyxel.KEY_RIGHT):
+        if pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.KEY_D):
             if 0 <= self.player['x'] + 1 <= self.room['w'] - self.player['w'] and not self.check_colliders(move_x=1):
                 self.player['x'] += 1
                 self.player['direction'] = 1
-        if pyxel.btn(pyxel.KEY_UP):
+        if pyxel.btn(pyxel.KEY_UP) or pyxel.btn(pyxel.KEY_W):
             if 0 <= self.player['y'] - 1 <= self.room['h'] and not self.check_colliders(move_y=-1):
                 self.player['y'] -= 1
                 self.player['direction'] = 2
-        if pyxel.btn(pyxel.KEY_DOWN):
+        if pyxel.btn(pyxel.KEY_DOWN) or pyxel.btn(pyxel.KEY_S):
             if 0 <= self.player['y'] + 1 <= self.room['h'] and not self.check_colliders(move_y=1):
                 self.player['y'] += 1
                 self.player['direction'] = 3
@@ -93,6 +125,8 @@ class Tamagotchi:
             self.room['current'] = 0
         if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.QUIT_2):
             pyxel.quit()
+        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.RESET_2):
+            self._clear_save()
 
     def change_room(self):
         """
