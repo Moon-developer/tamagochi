@@ -130,3 +130,6 @@ dmypy.json
 
 # Pycharm ide
 .idea/*
+
+# game save files
+saves/*

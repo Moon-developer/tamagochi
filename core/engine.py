@@ -1,6 +1,8 @@
 """engine.py
 This module holds the core class to run and manage the game at runtime
 """
+import shelve
+from os import mkdir
 import pyxel
 from core import Draw, Animation, Collision
 
@@ -9,11 +11,12 @@ class Tamagotchi:
     """ Tamagotchi game class manager using Pyxel library as the engine """
 
     def __init__(self):
+
         # setup mouse and screen
         self.screen = (100, 100)
         self.room = {'w': self.screen[0], 'h': self.screen[1] - 22, 'current': 0}  # minus the room wall height
         pyxel.init(self.screen[0], self.screen[1], caption="Tamagotchi")
-        pyxel.mouse(False)
+        pyxel.mouse(True)
 
         # setup character
         self.player = {'x': 0, 'y': 25, 'w': 17, 'h': 22, 'direction': -1}
@@ -22,6 +25,22 @@ class Tamagotchi:
         self.collision = Collision()
         self.draw_manager = Draw(collision=self.collision)
         self.animation = Animation()
+
+        # load save game and replace class instance with saved instance
+        self._load_save()
+
+    def _load_save(self):
+        try:
+            save = shelve.open('saves/tamagotchi_save')
+            self.__dict__ = save['Tamagotchi'].__dict__ if 'Tamagotchi' in save else self.__dict__
+            save.close()
+        except FileNotFoundError:
+            mkdir('saves')
+
+    def _save_game(self):
+        save = shelve.open('saves/tamagotchi_save')
+        save['Tamagotchi'] = self
+        save.close()
 
     def run(self):
         """ Start pyxel engine """
@@ -82,6 +101,7 @@ class Tamagotchi:
         self.change_room()
 
         if pyxel.btnp(pyxel.KEY_Q):
+            self._save_game()
             pyxel.quit()
 
     def draw(self):
