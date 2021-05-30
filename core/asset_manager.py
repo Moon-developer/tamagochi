@@ -22,7 +22,9 @@ class Assets(dict):
     WINDOW = {'x': 44, 'y': 3, 'img': 0, 'u': 182, 'v': 97, 'w': 23, 'h': 15, 'colkey': 15}
 
     # character
-    IDLE = {'img': 0, 'u': 0, 'v': 234, 'w': 17, 'h': 22, 'colkey': 15}
+    IDLE_0 = {'img': 0, 'u': 0, 'v': 234, 'w': 17, 'h': 22, 'colkey': 15}
+    IDLE_1 = {'img': 0, 'u': 158, 'v': 234, 'w': 17, 'h': 22, 'colkey': 15}
+    IDLE_2 = {'img': 0, 'u': 175, 'v': 234, 'w': 17, 'h': 22, 'colkey': 15}
     SIT = {'img': 0, 'u': 17, 'v': 237, 'w': 17, 'h': 19, 'colkey': 15}
     WALK_DOWN_1 = {'img': 0, 'u': 34, 'v': 234, 'w': 17, 'h': 22, 'colkey': 15}
     WALK_DOWN_2 = {'img': 0, 'u': 51, 'v': 234, 'w': 17, 'h': 22, 'colkey': 15}
