@@ -32,5 +32,5 @@ KEY_Q     => quit game
 
 ## Showcase
 
-<img alt="showcase" src="assets/tamagotchi.gif"  width="250" height="250">
+<img alt="showcase" src="assets/tamagotchi.gif"  width="195">
 
