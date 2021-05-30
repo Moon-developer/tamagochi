@@ -20,6 +20,7 @@ class Assets(dict):
     PLAY_2 = {'x': 20, 'y': 40, 'img': 0, 'u': 128, 'v': 178, 'w': 28, 'h': 11, 'colkey': 15}
     QUIT_1 = {'x': 35, 'y': 52, 'img': 0, 'u': 100, 'v': 156, 'w': 28, 'h': 11, 'colkey': 15}
     QUIT_2 = {'x': 35, 'y': 52, 'img': 0, 'u': 128, 'v': 156, 'w': 28, 'h': 11, 'colkey': 15}
+    TITLE = {'x': 4, 'y': 15, 'img': 0, 'u': 100, 'v': 138, 'w': 89, 'h': 18, 'colkey': 15}
 
     # assets
     BED = {'x': 0, 'y': 52, 'img': 0, 'u': 206, 'v': 0, 'w': 29, 'h': 46, 'colkey': 15}
@@ -76,7 +77,8 @@ class Draw:
         pyxel.blt(**Assets.WINDOW)
 
     def _draw_menu(self):
-        pyxel.rect(x=0, y=0, w=100, h=100, col=5)
+        pyxel.rect(x=0, y=0, w=100, h=100, col=1)
+        pyxel.blt(**Assets.TITLE)
         if not self.collision.mouse_over_menu(menu_btn=Assets.RESET_1):
             pyxel.blt(**Assets.RESET_1)
         else:
@@ -89,8 +91,6 @@ class Draw:
             pyxel.blt(**Assets.QUIT_1)
         else:
             pyxel.blt(**Assets.QUIT_2)
-
-
 
     @staticmethod
     def _draw_kitchen():
