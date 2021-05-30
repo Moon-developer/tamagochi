@@ -32,4 +32,5 @@ KEY_Q     => quit game
 
 ## Showcase
 
-![Tamagotchi Game](assets/showcase.gif)
+<img alt="showcase" src="assets/showcase.gif"  width="250" height="250">
+
