@@ -1,8 +1,13 @@
-from core.colliders import Collision
-import pyxel
+"""assets.py
+This module holds the classes required to manage game assets and tile-map location
+"""
 from pathlib import Path
+import pyxel
+from core.colliders import Collision
 
-class Assets(object):
+
+class Assets(dict):
+    """ Map out the tile-map to extract assets at correct pixel coordinates """
     # rooms
     BEDROOM = {'x': 0, 'y': 0, 'img': 0, 'u': 0, 'v': 0, 'w': 100, 'h': 100}
     ROOM = {'x': 0, 'y': 0, 'img': 0, 'u': 0, 'v': 100, 'w': 100, 'h': 100}
@@ -29,6 +34,7 @@ class Assets(object):
 
 
 class AssetManager:
+    """ Loads the tile-map coordinates into an image bank as well as manage collisions for the tile """
 
     def __init__(self, collision: Collision):
         base_dir = Path(__file__).resolve().parent.parent
@@ -69,9 +75,19 @@ class AssetManager:
 
     @staticmethod
     def draw_player(x: int, y: int, frame: dict):
+        """
+         Pyxel draw players current position using player frame passed
+        :param x: players current x position
+        :param y: players current y position
+        :param frame: players current animation frame
+        """
         pyxel.blt(x=x, y=y, **frame)
 
     def draw_room(self, room: int):
+        """
+        Pyxel draw the current room player is in.
+        :param room: 0:bedroom, 1:kitchen, 2:bathroom
+        """
         if room == 0:
             self._draw_bedroom()
         elif room == 1:
