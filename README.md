@@ -8,6 +8,8 @@ Assets done by [author](https://zodee.itch.io/)
 ![Pylint](https://img.shields.io/github/workflow/status/Moon-developer/tamagochi/Pylint?logo=GitHub&label=Pylint&style=flat-square)  
 Using `pyxel` as a simple Python game engine to expirement making a tamagochi style game.
 
+### note: game still in early development
+
 ## Setup
 
 ```shell
