@@ -13,7 +13,7 @@ class Tamagotchi:
         self.screen = (100, 100)
         self.room = {'w': self.screen[0], 'h': self.screen[1] - 22, 'current': 0}  # minus the room wall height
         pyxel.init(self.screen[0], self.screen[1], caption="Tamagotchi")
-        pyxel.mouse(True)
+        pyxel.mouse(False)
 
         # setup character
         self.player = {'x': 0, 'y': 25, 'w': 17, 'h': 22, 'direction': -1}
