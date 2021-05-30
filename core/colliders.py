@@ -1,6 +1,7 @@
 """colliders.py
 This module holds the classes required to manage game collisions with game assets
 """
+import pyxel
 
 
 class Collision:
@@ -18,6 +19,18 @@ class Collision:
         """
         x, y, w, h = kwargs['x'], kwargs['y'], kwargs['w'], kwargs['h']
         self.objects.append({'x1': x, 'y1': y, 'x2': x + w, 'y2': y + h, 'name': name})
+
+    @staticmethod
+    def mouse_over_menu(menu_btn: dict):
+        """
+        Check if mouse current x,y point falls within the buttons rectangle
+        :param menu_btn: menu Asset class value
+        :return: True if within the button else False
+        """
+        x, y = pyxel.mouse_x, pyxel.mouse_y
+        bl = menu_btn['x'], menu_btn['y']
+        tr = menu_btn['x'] + menu_btn['w'], menu_btn['y'] + menu_btn['h']
+        return bl[0] < x < tr[0] and bl[1] < y < tr[1]
 
     @staticmethod
     def _check_x(player: dict, obj: dict) -> bool:

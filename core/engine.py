@@ -5,6 +5,7 @@ import shelve
 from os import mkdir
 import pyxel
 from core import Draw, Animation, Collision
+from core import Assets
 
 
 class Tamagotchi:
@@ -14,7 +15,7 @@ class Tamagotchi:
 
         # setup mouse and screen
         self.screen = (100, 100)
-        self.room = {'w': self.screen[0], 'h': self.screen[1] - 22, 'current': 0}  # minus the room wall height
+        self.room = {'w': self.screen[0], 'h': self.screen[1] - 22, 'current': 3}  # minus the room wall height
         pyxel.init(self.screen[0], self.screen[1], caption="Tamagotchi")
         pyxel.mouse(True)
 
@@ -28,6 +29,7 @@ class Tamagotchi:
 
         # load save game and replace class instance with saved instance
         self._load_save()
+        self.room['current'] = 3  # reset to start at menu
 
     def _load_save(self):
         try:
@@ -83,6 +85,13 @@ class Tamagotchi:
                 self.player['y'] += 1
                 self.player['direction'] = 3
 
+    def menu_pressed(self):
+        """
+        Check if left mouse button pressed position falls within menu button and calls correct logic
+        """
+        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.PLAY_1):
+            self.room['current'] = 0
+
     def change_room(self):
         """
         Game room change controller
@@ -97,8 +106,11 @@ class Tamagotchi:
 
     def update(self):
         """ Game logic """
-        self.move_character()
-        self.change_room()
+        if self.room['current'] == 3:
+            self.menu_pressed()
+        else:
+            self.move_character()
+            self.change_room()
 
         if pyxel.btnp(pyxel.KEY_Q):
             self._save_game()
@@ -113,5 +125,6 @@ class Tamagotchi:
         self.draw_manager.draw_room(room=self.room['current'])
 
         # # draw player
-        frame = self.animation.get_walk_animation(direction=self.player['direction'])
-        self.draw_manager.draw_player(x=self.player['x'], y=self.player['y'], frame=frame)
+        if self.room['current'] != 3:
+            frame = self.animation.get_walk_animation(direction=self.player['direction'])
+            self.draw_manager.draw_player(x=self.player['x'], y=self.player['y'], frame=frame)
