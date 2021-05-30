@@ -38,9 +38,8 @@ class AssetManager:
 
     def __init__(self, collision: Collision):
         base_dir = Path(__file__).resolve().parent.parent
-        asset_pyres = Path.joinpath(base_dir, 'assets/tilemap.pyres').as_posix()
-        pyxel.load(asset_pyres)
-        pyxel.load('assets/tilemap.pyres')
+        asset_pyres = Path.joinpath(base_dir, 'assets/tilemap.pyxres').as_posix()
+        pyxel.load(filename=asset_pyres)
 
         # static objects
         wall = {'x': 0, 'y': 0, 'w': 100, 'h': 23, 'name': 'wall'}

@@ -2,7 +2,7 @@
 This module holds the classes required to manage game animations
 """
 from itertools import cycle
-from core.assets import Assets
+from core.asset_manager import Assets
 
 
 class Animation:
