@@ -4,6 +4,7 @@ A simple 8-bit Python Tamagotchi game made with [Pyxel](https://github.com/kitao
 Assets done by [author](https://zodee.itch.io/)
 
 ## About
+![Pylint](https://img.shields.io/github/workflow/status/Moon-developer/tamagochi/Pylint?logo=GitHub&label=Pylint&style=flat-square)  
 Using `pyxel` as a simple Python game engine to expirement making a tamagochi style game.
 
 ## Setup
