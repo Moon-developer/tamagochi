@@ -2,7 +2,7 @@
 This module holds the core class to run and manage the game at runtime
 """
 import pyxel
-from core import AssetManager, Animation, Collision
+from core import Draw, Animation, Collision
 
 
 class Tamagotchi:
@@ -20,7 +20,7 @@ class Tamagotchi:
 
         # load assets/collisions/animations
         self.collision = Collision()
-        self.assets = AssetManager(collision=self.collision)
+        self.draw_manager = Draw(collision=self.collision)
         self.animation = Animation()
 
     def run(self):
@@ -90,8 +90,8 @@ class Tamagotchi:
         pyxel.cls(0)
 
         # draw assets in current room
-        self.assets.draw_room(room=self.room['current'])
+        self.draw_manager.draw_room(room=self.room['current'])
 
         # # draw player
         frame = self.animation.get_walk_animation(direction=self.player['direction'])
-        self.assets.draw_player(x=self.player['x'], y=self.player['y'], frame=frame)
+        self.draw_manager.draw_player(x=self.player['x'], y=self.player['y'], frame=frame)

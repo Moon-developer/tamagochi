@@ -2,6 +2,7 @@
 This module holds the classes required to manage game assets and tile-map location
 """
 from pathlib import Path
+from datetime import datetime
 import pyxel
 from core.colliders import Collision
 
@@ -33,7 +34,7 @@ class Assets(dict):
     WALK_RIGHT_2 = {'img': 0, 'u': 144, 'v': 234, 'w': 14, 'h': 22, 'colkey': 15}
 
 
-class AssetManager:
+class Draw:
     """ Loads the tile-map coordinates into an image bank as well as manage collisions for the tile """
 
     def __init__(self, collision: Collision):
@@ -82,6 +83,12 @@ class AssetManager:
         """
         pyxel.blt(x=x, y=y, **frame)
 
+    @staticmethod
+    def _draw_current_time():
+        now = datetime.now()
+        timestamp = f'{now.hour}:{now.minute}'
+        pyxel.text(x=4, y=2, s=timestamp, col=7)
+
     def draw_room(self, room: int):
         """
         Pyxel draw the current room player is in.
@@ -93,3 +100,4 @@ class AssetManager:
             self._draw_kitchen()
         elif room == 2:
             self._draw_bathroom()
+        self._draw_current_time()
