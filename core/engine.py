@@ -89,8 +89,10 @@ class Tamagotchi:
         """
         Check if left mouse button pressed position falls within menu button and calls correct logic
         """
-        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.PLAY_1):
+        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.PLAY_2):
             self.room['current'] = 0
+        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.QUIT_2):
+            pyxel.quit()
 
     def change_room(self):
         """
@@ -113,8 +115,8 @@ class Tamagotchi:
             self.change_room()
 
         if pyxel.btnp(pyxel.KEY_Q):
+            self.room['current'] = 3
             self._save_game()
-            pyxel.quit()
 
     def draw(self):
         """ Pyxel update screen changes """

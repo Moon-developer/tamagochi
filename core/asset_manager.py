@@ -18,6 +18,8 @@ class Assets(dict):
     RESET_2 = {'x': 50, 'y': 40, 'img': 0, 'u': 133, 'v': 167, 'w': 33, 'h': 11, 'colkey': 15}
     PLAY_1 = {'x': 20, 'y': 40, 'img': 0, 'u': 100, 'v': 178, 'w': 28, 'h': 11, 'colkey': 15}
     PLAY_2 = {'x': 20, 'y': 40, 'img': 0, 'u': 128, 'v': 178, 'w': 28, 'h': 11, 'colkey': 15}
+    QUIT_1 = {'x': 35, 'y': 52, 'img': 0, 'u': 100, 'v': 156, 'w': 28, 'h': 11, 'colkey': 15}
+    QUIT_2 = {'x': 35, 'y': 52, 'img': 0, 'u': 128, 'v': 156, 'w': 28, 'h': 11, 'colkey': 15}
 
     # assets
     BED = {'x': 0, 'y': 52, 'img': 0, 'u': 206, 'v': 0, 'w': 29, 'h': 46, 'colkey': 15}
@@ -83,6 +85,12 @@ class Draw:
             pyxel.blt(**Assets.PLAY_1)
         else:
             pyxel.blt(**Assets.PLAY_2)
+        if not self.collision.mouse_over_menu(menu_btn=Assets.QUIT_1):
+            pyxel.blt(**Assets.QUIT_1)
+        else:
+            pyxel.blt(**Assets.QUIT_2)
+
+
 
     @staticmethod
     def _draw_kitchen():
