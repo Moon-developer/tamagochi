@@ -1,9 +1,12 @@
 """assets.py
 This module holds the classes required to manage game assets and tile-map location
 """
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+
 import pyxel
+
+from core.menu import Menu
 from core.colliders import Collision
 
 
@@ -66,6 +69,8 @@ class Draw:
         self.collision.add_collider(**Assets.BOOKSHELF, name='bookshelf')
         self.collision.add_collider(**Assets.CLOSET, name='closet')
 
+        self.menu = Menu()
+
     @staticmethod
     def _draw_bedroom():
         pyxel.blt(**Assets.BEDROOM)
@@ -79,15 +84,15 @@ class Draw:
     def _draw_menu(self):
         pyxel.rect(x=0, y=0, w=100, h=100, col=1)
         pyxel.blt(**Assets.TITLE)
-        if not self.collision.mouse_over_menu(menu_btn=Assets.RESET_1):
+        if not self.menu.mouse_over_menu(menu_btn=Assets.RESET_1):
             pyxel.blt(**Assets.RESET_1)
         else:
             pyxel.blt(**Assets.RESET_2)
-        if not self.collision.mouse_over_menu(menu_btn=Assets.PLAY_1):
+        if not self.menu.mouse_over_menu(menu_btn=Assets.PLAY_1):
             pyxel.blt(**Assets.PLAY_1)
         else:
             pyxel.blt(**Assets.PLAY_2)
-        if not self.collision.mouse_over_menu(menu_btn=Assets.QUIT_1):
+        if not self.menu.mouse_over_menu(menu_btn=Assets.QUIT_1):
             pyxel.blt(**Assets.QUIT_1)
         else:
             pyxel.blt(**Assets.QUIT_2)

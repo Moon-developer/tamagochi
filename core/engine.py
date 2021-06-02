@@ -2,11 +2,12 @@
 This module holds the core class to run and manage the game at runtime
 """
 import shelve
-from os import mkdir
 from copy import deepcopy
+from os import mkdir
+
 import pyxel
-from core import Draw, Animation, Collision
-from core import Assets
+
+from core import Assets, Draw, Animation, Collision
 
 
 class ResetManager:
@@ -121,11 +122,14 @@ class Tamagotchi:
         """
         Check if left mouse button pressed position falls within menu button and calls correct logic
         """
-        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.PLAY_2):
+        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.draw_manager.menu.mouse_over_menu(menu_btn=Assets.PLAY_2):
+            self.draw_manager.menu.play(sound='play')
             self.room['current'] = 0
-        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.QUIT_2):
+        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.draw_manager.menu.mouse_over_menu(menu_btn=Assets.QUIT_2):
+            self.draw_manager.menu.play(sound='quit')
             pyxel.quit()
-        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.collision.mouse_over_menu(menu_btn=Assets.RESET_2):
+        if pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON) and self.draw_manager.menu.mouse_over_menu(menu_btn=Assets.RESET_2):
+            self.draw_manager.menu.play(sound='reset')
             self._clear_save()
 
     def change_room(self):
